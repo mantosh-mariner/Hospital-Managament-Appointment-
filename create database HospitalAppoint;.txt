@@ -1,0 +1,76 @@
+create database HospitalAppoint;
+
+use HospitalAppoint;
+CREATE TABLE Patient (
+    patient_id INT AUTO_INCREMENT PRIMARY KEY,
+   patient_name VARCHAR(200) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(15),
+    date_of_birth DATE,
+    gender ENUM('Male', 'Female', 'Other'),
+    address VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE Doctor (
+    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    userId_doctor varchar(50),
+    doctor_name VARCHAR(200) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    
+    password VARCHAR(255) NOT NULL,
+    specialization VARCHAR(100),
+    phone_number VARCHAR(15),
+    doctor_review varchar(50),
+    experience INT,
+    room_No varchar(100), 
+    availability varchar (20) default ("Not Available")
+);
+
+
+ table Doctro;
+drop table Doctor ;
+
+CREATE TABLE appointment (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_name varchar(50),
+    patient_mail varchar(50),
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    p_phone varchar(15),
+   appoint_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (patient_id) REFERENCES Patient(patient_id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctor(doctor_id)
+
+);
+
+alter table Doctor add column doctor_id varchar (20) default ("Not Available");
+alter table appointment add column Patient_status varchar (50) ;
+SELECT d.room_No, p.booking_id 
+FROM appointment p
+JOIN Doctor d ON p.doctor_id = d.doctor_id and p.patient_id=14 and d.doctor_id=3;
+;
+
+
+drop table appointment;
+
+
+delete doctor_id from Doctor where id="2";
+ALTER TABLE Patient AUTO_INCREMENT = 1;
+DELETE FROM Doctor WHERE doctor_id="1";
+
+select * from appointment;
+select * from Doctor;
+select * from Patient;
+
+
+SELECT d.room_No as room, d.doctor_name as name, p.booking_id as book_id ,p.appoint_date AS date
+								FROM appointment p  JOIN Doctor d ON p.doctor_id = d.doctor_id 
+								WHERE p.patient_id = 14 AND d.doctor_id = 3 order by book_id desc limit 1;
+
+SELECT booking_id , appoint_date  FROM appointment where patient_id=14;
+SELECT  booking_id, patient_name, appoint_date, p_phone  FROM appointment WHERE doctor_id=3;
+
